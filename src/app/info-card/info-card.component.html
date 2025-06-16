@@ -1,0 +1,8 @@
+<div id="parent" [ngClass]="type">
+  <div>
+    <i [class]="icon"></i>
+    <span>{{ type | titlecase }}</span>
+  </div>
+  <p [innerHTML]="text"></p>
+  <span id="progress"></span>
+</div>

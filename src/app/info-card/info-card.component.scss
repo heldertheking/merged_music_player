@@ -1,0 +1,84 @@
+#parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25vw;
+  height: 20vh;
+  background-color: #fff;
+  position: absolute;
+  top: min(5vh, 50px);
+  right: -50vw;
+  opacity: 0;
+  border-radius: 15px 0 0 15px;
+  border: 3px solid #22ff00;
+  border-right: none;
+  padding: 8px;
+  animation: slide-in 0.5s forwards, slide-out 0.5s forwards 8.5s;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+
+    span {
+      background-color: transparent;
+    }
+  }
+
+  &.disclaimer {
+    border-color: #353535;
+  }
+
+  &.info {
+    border-color: #007bff;
+  }
+
+  &.warn {
+    border-color: #ffc107;
+  }
+
+  &.error {
+    border-color: #dc3545;
+  }
+
+  #progress {
+    display: inline-block;
+    width: 100%;
+    height: 10px;
+    margin: auto 0 0 auto;
+    background: linear-gradient(to right, #007bff 50%, #5a5a5a 50%);
+    background-size: 200% 100%;
+    border-radius: 5px;
+    animation: progress 8s linear forwards;
+  }
+
+  @keyframes progress {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -100% 0;
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      right: -50vw;
+    }
+    to {
+      right: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      right: 0;
+    }
+    to {
+      right: -50vw;
+      opacity: 0;
+    }
+  }
+}

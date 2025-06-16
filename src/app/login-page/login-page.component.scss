@@ -1,0 +1,131 @@
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 50vw;
+  height: 60vh;
+
+  background-color: white;
+  padding: 10px;
+  border-radius: 15px;
+
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+
+  #form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    color: rgb(216, 241, 236);
+
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
+
+    #icons {
+      z-index: 9999;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+
+      i {
+        font-size: 1.6rem;
+        cursor: pointer;
+      }
+
+      svg {
+        height: 2rem;
+        cursor: pointer;
+      }
+    }
+  }
+
+  #form-body {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+
+    width: 100%;
+    align-items: center;
+
+    input {
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      border-radius: 13px;
+      width: 60%;
+
+      outline: none;
+
+      color: rgb(216, 241, 236);
+
+      &::placeholder {
+        color: rgba(216, 241, 236, 0.24);
+      }
+    }
+
+    button {
+      font-size: 1.3rem;
+      padding: 0.2rem;
+      border-radius: 14px;
+      width: 8vw;
+
+      color: rgb(216, 241, 236);
+
+      &:disabled {
+        color: rgba(216, 241, 236, 0.24);
+        cursor: not-allowed;
+      }
+    }
+
+    .error-message {
+      color: rgb(255, 0, 0);
+      font-size: 1.2rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+  }
+}
+
+.liquid-glass {
+  background: rgba(115, 115, 115, 0.15); /* transparent white */
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(90, 90, 90, 0.5);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(119, 119, 119, 0.3);
+}
+
+.liquid-glass {
+  filter: url(#liquid-distort);
+}
+
+.liquid-glass::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0.7;
+  pointer-events: none;
+}
