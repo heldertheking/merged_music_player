@@ -24,6 +24,7 @@ body {
   height: 100%;
   overflow: hidden;
   z-index: 0;
+  pointer-events: none;
 
   .background-oval {
     position: absolute;
@@ -32,35 +33,6 @@ body {
     z-index: 0;
     animation: pulse 8s infinite alternate, float 20s infinite ease-in-out;
     pointer-events: none;
-  }
-}
-
-#platforms {
-  display: flex;
-  flex-direction: row;
-
-  position: absolute;
-
-  top: 0;
-  right: 0;
-
-  align-items: center;
-
-
-  z-index: 999999;
-
-  i, svg {
-    margin-right: 5px;
-  }
-
-  i {
-    color: #FF0033;
-    font-size: 1.6rem;
-  }
-
-  svg {
-    color: #1ED760;
-    height: 2rem;
   }
 }
 

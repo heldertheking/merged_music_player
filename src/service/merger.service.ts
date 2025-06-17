@@ -23,6 +23,11 @@ export class MergerService {
 
     const ytSearch$: Observable<YouTubeSearchResponse> = this.youtubeService.searchVideos(
       RequestConversionUtil.toYTSearchRequest(request)
+    ).pipe(
+      catchError(error => {
+        console.error('Youtube API error:', error);
+        return of({items: []} as YouTubeSearchResponse); // Return an empty response on error
+      })
     );
 
     const spotifySearch$: Observable<SpotifySearchResponse> = this.spotifyService.searchSongs(
@@ -30,8 +35,7 @@ export class MergerService {
     ).pipe(
       catchError(error => {
         console.error('Spotify API error:', error);
-        // Return an empty response if Spotify API fails
-        return of({tracks: {items: []}} as SpotifySearchResponse);
+        return of({tracks: {items: []}} as SpotifySearchResponse); // Return an empty response on error
       })
     );
 

@@ -1,5 +1,31 @@
-.content-area {
-  box-sizing: border-box;
-  height: 100vh;
-  width: 100%;
+#platforms {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 0;
+  align-items: center;
+  z-index: 999999;
+
+  color: rgb(216, 241, 236);
+
+  i, svg {
+    margin-right: 5px;
+  }
+
+  i {
+    font-size: 1.6rem;
+
+    &.active {
+      color: #FF0033;
+    }
+  }
+
+  svg {
+    height: 2rem;
+
+    &.active {
+      color: #1ED760;
+    }
+  }
 }

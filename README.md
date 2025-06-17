@@ -2,6 +2,10 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
 
+
+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 google
+8c10d11642cc410b89f5de8be6fe61a8 spotify
+
 ## Development server
 
 To start a local development server, run:

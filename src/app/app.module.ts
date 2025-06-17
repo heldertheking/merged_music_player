@@ -14,8 +14,9 @@ import {MusicPlayerComponent} from './music-player/music-player.component';
 import {YouTubePlayerModule} from '@angular/youtube-player';
 import {InfoCardComponent} from './info-card/info-card.component';
 import {MatProgressBar} from '@angular/material/progress-bar';
-import {LoginPageComponent} from './login-page/login-page.component';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef} from "@angular/material/table";
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,6 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
     HomeComponent,
     MusicPlayerComponent,
     InfoCardComponent,
-    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +37,12 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
     MatProgressBar,
     MatTabGroup,
     MatTab,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    AuthCallbackComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
