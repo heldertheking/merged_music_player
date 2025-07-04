@@ -79,10 +79,6 @@ export class PlayerService implements OnDestroy {
     // }
   }
 
-  private getUserToken(platform: Platform): string | null {
-    return this.auth.getAccessToken(platform);
-  }
-
   nextTrack() {
     this.queueManager.nextTrack()
   }
