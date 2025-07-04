@@ -57,6 +57,6 @@ export interface YouTubeSearchResponse {
       channelTitle: string;
       liveBroadcastContent: string;
     };
-    videoId?: string;
+    id: {videoId: string;}
   }[];
 }

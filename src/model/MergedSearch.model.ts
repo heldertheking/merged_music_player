@@ -176,7 +176,7 @@ export class RequestConversionUtil {
       const key = `${title}-${channelTitle}`;
       if (!mergedMap.has(key)) {
         mergedMap.set(key, {
-          id: item.videoId || '',
+          id: item.id.videoId,
           title: item.snippet.title,
           description: item.snippet.description,
           thumbnailUrl: [
@@ -193,7 +193,7 @@ export class RequestConversionUtil {
         // If exists (from Spotify), update platform to 'both' and add YouTube metadata if needed
         const existing = mergedMap.get(key)!;
         existing.platform = 'both';
-        existing.id = existing.id || (item.videoId || '');
+        existing.id = existing.id || (item.id.videoId || '');
         existing.publishedAt = existing.publishedAt || item.snippet.publishedAt;
         existing.description = existing.description || item.snippet.description;
         existing.channelTitle = existing.channelTitle || item.snippet.channelTitle;
@@ -216,6 +216,4 @@ export class RequestConversionUtil {
 
     return { items: mixed };
   }
-
-
 }

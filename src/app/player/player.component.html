@@ -1,0 +1,35 @@
+<mat-progress-bar mode="determinate" [value]="playbackTime"></mat-progress-bar>
+<div id="player-bar">
+  <div id="controls">
+    <i class="pi pi-backward" (click)="previousTrack()"></i>
+    <i [class]="state == 'playing' ? 'pi pi-pause' : 'pi pi-play'" (click)="togglePlayState()"></i>
+    <i class="pi pi-forward" (click)="nextTrack()"></i>
+  </div>
+  <div id="info">
+    <img alt="Thumbnail" id="thumbnail" [src]="currentItem?.thumbnailUrl">
+    <p id="titel">{{ currentItem?.title || 'Song Title' }}</p>
+    <span id="artist">{{ currentItem?.artist || 'artist' }}</span>
+  </div>
+  <div id="volume-controls">
+    <i [ngClass]="isMuted ? 'pi pi-volume-off' : this.volume > 25 ? 'pi pi-volume-up' : 'pi pi-volume-down'"
+       (click)="toggleMute()"></i>
+    <input type="range" id="volume-slider" min="0" max="100" step="1"
+           [(ngModel)]="volume" (change)="setVolume(volume, false)">
+  </div>
+</div>
+
+<youtube-player
+  #youtubePlayer
+  [videoId]="ytVideoId"
+  [height]="0"
+  [width]="0"
+  [playerVars]="{
+    autoplay: 1,
+    loop: 0,
+    controls: 0,
+    rel: 0,
+    showinfo: 0,
+    modestbranding: 0,
+  }"
+  (timeupdate)="ontimeupdate(event)"
+></youtube-player>

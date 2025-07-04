@@ -1,0 +1,11 @@
+<div id="container">
+  <div id="scroll">
+    <div *ngFor="let item of queue, let index= index" class="queue-item" (click)="playItem(item)"
+         [class.current]="currentPlayingItem == item">
+      <img [src]="item.thumbnailUrl" alt="Thumbnail" class="thumbnail-square">
+      <span> {{ item.title }}</span>
+      <i class="pi pi-trash" (click)="removeFromQueue(item, index)"></i>
+    </div>
+  </div>
+  <span id="tag">Playlist</span>
+</div>

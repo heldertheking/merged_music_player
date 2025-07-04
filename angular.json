@@ -77,6 +77,14 @@
               "buildTarget": "merged_music_player:build:development"
             }
           },
+          "options": {
+            "ssl": true,
+            "sslKey": "ssl/key.pem",
+            "sslCert": "ssl/cert.pem",
+            "port": 4200,
+            "host": "0.0.0.0",
+            "proxyConfig": "proxy.conf.json"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

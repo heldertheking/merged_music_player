@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../service/auth-service.service';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -8,10 +8,16 @@ import {MatDialog} from '@angular/material/dialog';
   standalone: false,
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'merged_music_player';
   youtubeTokenPresent: boolean = false;
   spotifyTokenPresent: boolean = false;
+
+  @ViewChild('platforms', { static: true }) platforms: any;
+
+  ngAfterViewInit() {
+    this.checkTokens();
+  }
 
   constructor(private authService: AuthService) {
   }
@@ -24,6 +30,7 @@ export class AppComponent implements OnInit {
 
     if (this.checkTokens(platform)) {
       this.authService.logout(platform);
+      this.checkTokens()
     } else {
       this.authService.login(platform).then(r =>
         console.log(`Logged in to ${platform}`)

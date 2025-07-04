@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-  private readonly redirectUri = 'http://127.0.0.1:4200/auth_callback';
+  private readonly redirectUri = 'https://127.0.0.1:4200/auth_callback';
   private readonly youtubeClientId = '511891274934-a4d78n8vjouhj7bvvr76f1emvt29cbn0.apps.googleusercontent.com';
   private readonly spotifyClientId = '071beddb35e844d4a23abff81bd619a0';
   private readonly spotifyScopes = [
@@ -85,21 +85,24 @@ export class AuthService {
         this.setTokens(state, tokens);
         this.router.navigate(['/']);
       });
-    } else {
-      // YouTube (Google) token endpoint
-      const body = new HttpParams()
-        .set('grant_type', 'authorization_code')
-        .set('code', code)
-        .set('redirect_uri', this.redirectUri)
-        .set('client_id', this.youtubeClientId)
-        .set('code_verifier', codeVerifier);
+    } else if (state === 'youtube') {
+      // YouTube (Google) token endpoint via your backend
+      const body = {
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: this.redirectUri,
+        client_id: this.youtubeClientId,
+        code_verifier: codeVerifier
+      };
 
-      this.http.post<any>('https://oauth2.googleapis.com/token', body, {
-        headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
-      }).subscribe(tokens => {
-        this.setTokens(state, tokens);
-        this.router.navigate(['/']);
-      });
+      this.http.post<any>('http://localhost:3000/api/google-token', body)
+        .subscribe(tokens => {
+          this.setTokens(state, tokens);
+          this.router.navigate(['/']);
+        });
+    } else {
+      console.error('Unknown provider state:', state);
+      return;
     }
   }
 
@@ -125,27 +128,23 @@ export class AuthService {
     const refreshToken = localStorage.getItem(`${provider}_refresh_token`);
     if (!refreshToken) return;
 
-    let url = '';
-    let body = new HttpParams();
-    if (provider === 'spotify') {
-      url = 'https://accounts.spotify.com/api/token';
-      body = body
+    if (provider === 'youtube') {
+      this.http.post<any>('http://localhost:3000/api/google-refresh-token', { refresh_token: refreshToken })
+        .subscribe(tokens => {
+          this.setTokens(provider, tokens);
+        });
+    } else {
+      const body = new HttpParams()
         .set('grant_type', 'refresh_token')
         .set('refresh_token', refreshToken)
         .set('client_id', this.spotifyClientId);
-    } else {
-      url = 'https://oauth2.googleapis.com/token';
-      body = body
-        .set('grant_type', 'refresh_token')
-        .set('refresh_token', refreshToken)
-        .set('client_id', this.youtubeClientId);
-    }
 
-    this.http.post<any>(url, body, {
-      headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
-    }).subscribe(tokens => {
-      this.setTokens(provider, tokens);
-    });
+      this.http.post<any>('https://accounts.spotify.com/api/token', body, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+      }).subscribe(tokens => {
+        this.setTokens(provider, tokens);
+      });
+    }
   }
 
   keepSessionAlive(provider: 'spotify' | 'youtube') {
