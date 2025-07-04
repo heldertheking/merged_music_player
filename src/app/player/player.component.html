@@ -8,7 +8,7 @@
   <div id="info" [class.active]="currentItem">
     <img alt="Thumbnail" id="thumbnail" [src]="currentItem?.thumbnailUrl">
     <p id="titel">{{ currentItem?.title || 'Song Title' }}</p>
-    <span id="artist">{{ currentItem?.artist || 'artist' }}</span> <!--TODO: Remove Loading animation once current Items is set -->
+    <span id="artist">{{ currentItem?.artist || 'artist' }}</span>
   </div>
   <div id="volume-controls">
     <i [ngClass]="isMuted || this.volume < 1 ? 'pi pi-volume-off' : this.volume > 25 ? 'pi pi-volume-up' : 'pi pi-volume-down'"
