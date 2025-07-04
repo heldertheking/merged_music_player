@@ -20,12 +20,15 @@
   box-sizing: border-box;
   border-radius: 0 15px 15px 0;
   width: 20%;
+  border: none;
 
-  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, backdrop-filter .5s ease-in-out, background-color 0.5s ease-in-out, border 0.3s ease-in-out;
 
   &:hover {
+    border: 2px solid rgba(90, 90, 90, 0.28);
+    border-left: none;
     transform: translate(0%, -60%);
-    background-color: rgba(138, 138, 138, 0.31);
+    //background-color: rgba(138, 138, 138, 0.31);
     backdrop-filter: blur(10px); // Adds blur effect
     .queue-item.current {
       background-color: rgba(255, 0, 0, 0.2);

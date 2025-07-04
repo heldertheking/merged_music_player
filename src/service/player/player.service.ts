@@ -84,27 +84,11 @@ export class PlayerService implements OnDestroy {
   }
 
   nextTrack() {
-    if (!this.currentItem) return;
-    const idx = this.queue.findIndex(q => q.id === this.currentItem!.id && q.platform === this.currentItem!.platform);
-    if (idx !== -1 && idx < this.queue.length - 1) {
-      this.currentItem = this.queue[idx + 1];
-      this.play();
-      // if (this.currentItem.platform === 'spotify') {
-      //   this.spotifyService.next();
-      // }
-    }
+    this.queueManager.nextTrack()
   }
 
   previousTrack() {
-    if (!this.currentItem) return;
-    const idx = this.queue.findIndex(q => q.id === this.currentItem!.id && q.platform === this.currentItem!.platform);
-    if (idx > 0) {
-      this.currentItem = this.queue[idx - 1];
-      this.play();
-      // if (this.currentItem.platform === 'spotify') {
-      //   this.spotifyService.previous();
-      // }
-    }
+    this.queueManager.previousTrack()
   }
 
   setVolume(volume: number) {

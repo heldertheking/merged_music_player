@@ -1,17 +1,17 @@
-<mat-progress-bar mode="determinate" [value]="playbackTime"></mat-progress-bar>
-<div id="player-bar">
+<div id="player-bar" [class.active]="currentItem">
+  <span id="progress_bar" [style.width]="this.crrSongProgress + '%'"></span>
   <div id="controls">
     <i class="pi pi-backward" (click)="previousTrack()"></i>
     <i [class]="state == 'playing' ? 'pi pi-pause' : 'pi pi-play'" (click)="togglePlayState()"></i>
     <i class="pi pi-forward" (click)="nextTrack()"></i>
   </div>
-  <div id="info">
+  <div id="info" [class.active]="currentItem">
     <img alt="Thumbnail" id="thumbnail" [src]="currentItem?.thumbnailUrl">
     <p id="titel">{{ currentItem?.title || 'Song Title' }}</p>
-    <span id="artist">{{ currentItem?.artist || 'artist' }}</span>
+    <span id="artist">{{ currentItem?.artist || 'artist' }}</span> <!--TODO: Remove Loading animation once current Items is set -->
   </div>
   <div id="volume-controls">
-    <i [ngClass]="isMuted ? 'pi pi-volume-off' : this.volume > 25 ? 'pi pi-volume-up' : 'pi pi-volume-down'"
+    <i [ngClass]="isMuted || this.volume < 1 ? 'pi pi-volume-off' : this.volume > 25 ? 'pi pi-volume-up' : 'pi pi-volume-down'"
        (click)="toggleMute()"></i>
     <input type="range" id="volume-slider" min="0" max="100" step="1"
            [(ngModel)]="volume" (change)="setVolume(volume, false)">
@@ -31,5 +31,4 @@
     showinfo: 0,
     modestbranding: 0,
   }"
-  (timeupdate)="ontimeupdate(event)"
 ></youtube-player>

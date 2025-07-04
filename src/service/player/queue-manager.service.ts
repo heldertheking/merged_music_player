@@ -56,6 +56,38 @@ export class QueueManagerService {
     };
     localStorage.setItem('lastPlayerQueue', JSON.stringify(data));
   }
+
+  nextTrack() {
+    if (!this._currentPlayingItem || this._queue.length === 0) {
+      console.warn('No track to play next.');
+      return;
+    }
+
+    const currentIndex = this._queue.findIndex(item => item === this._currentPlayingItem);
+    if (currentIndex === -1 || currentIndex === this._queue.length - 1) {
+      console.warn('Already at the last track.');
+      return;
+    }
+
+    this._currentPlayingItem = this._queue[currentIndex + 1];
+    this.$currentPlayingItem.next(this._currentPlayingItem);
+  }
+
+  previousTrack() {
+    if (!this._currentPlayingItem || this._queue.length === 0) {
+      console.warn('No track to play previous.');
+      return;
+    }
+
+    const currentIndex = this._queue.findIndex(item => item === this._currentPlayingItem);
+    if (currentIndex === -1 || currentIndex === 0) {
+      console.warn('Already at the first track.');
+      return;
+    }
+
+    this._currentPlayingItem = this._queue[currentIndex - 1];
+    this.$currentPlayingItem.next(this._currentPlayingItem);
+  }
 }
 
 export interface QueueItem {

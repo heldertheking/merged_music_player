@@ -33,6 +33,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
   private previousVolume: number = 50; // Store previous volume for toggling mute
   ytVideoId: string = "";
 
+  protected crrSongProgress: number = 0; // Progress of the current song in seconds
+  private PLAYBACK_TIME_UPDATE_INTERVAL: any = null; // 1 second
+
   constructor(private platformPlayer: PlayerService, private queueManager: QueueManagerService) {
   }
 
@@ -42,15 +45,25 @@ export class PlayerComponent implements OnInit, OnDestroy {
         this.currentItem = q || undefined;
         if (q?.platform === 'youtube') {
           this.ytVideoId = q.id;
+          this.startTimeInterval()
+        } else {
+          this.ytVideoId = '';
+          this._youtubePlayer?.pauseVideo()
+          clearInterval(this.PLAYBACK_TIME_UPDATE_INTERVAL)
+          this.crrSongProgress = 0; // Reset progress when not playing YouTube video
         }
       }),
 
       this.platformPlayer.playerState$.subscribe(state => {
         this.state = state;
+        if (state === YT.PlayerState.ENDED.toString()) {
+          this.platformPlayer.nextTrack();
+        }
       }),
 
       this.platformPlayer.volume$.subscribe(value => {
         this.volume = value;
+        this._youtubePlayer?.setVolume(this.volume)
       }),
     );
   }
@@ -94,9 +107,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
   }
 
-  ontimeupdate(event: any) {
-    console.log(event)
+  startTimeInterval() {
+    this.PLAYBACK_TIME_UPDATE_INTERVAL = setInterval(() => {
+        const currentTime = this._youtubePlayer?.getCurrentTime();
+        const duration = this._youtubePlayer?.getDuration();
+        if (duration && duration > 0 && currentTime) {
+          this.crrSongProgress = (currentTime / duration) * 100;
+        }
+    },  500); // Update every second
   }
-
-  protected readonly event = event;
 }
